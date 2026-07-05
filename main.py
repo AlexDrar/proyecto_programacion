@@ -1,3 +1,3 @@
-import modos
+import modos_de_juegos
 
-modos.computadora()
+modos_de_juegos.computadora()

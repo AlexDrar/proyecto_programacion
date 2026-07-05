@@ -5,7 +5,7 @@ from datetime import datetime
 
 def limpiar(): #limpia la terminal
     os.system("cls")
-def fin_de_partida(ganador, consultasganador, incosistente=False):
+def fin_de_partida(ganador, consultasganador, incosistente=False):#Arma la Interfaz del fin de partida
     limpiar()
     print("="*50)
     titulo = "FIN DE LA PARTIDA"
@@ -21,7 +21,7 @@ def fin_de_partida(ganador, consultasganador, incosistente=False):
         print("Partida Finalizada! Se ha detectado una inconsistencia")
         print()
         input("Presione ENTER para continuar...")
-def interfaz(nombre1, nombre2, consultas1, aciertos1, consultas2, aciertos2, turnoactual, iscomputer=False):
+def interfaz(nombre1, nombre2, consultas1, aciertos1, consultas2, aciertos2, turnoactual, iscomputer=False): #Arma la Interfaz de la partida
     limpiar()
     print("="*50)
     titulo = "CODIGO SECRETO"
@@ -109,3 +109,27 @@ def reducir_lista(lista_actual, numero, aciertos):  # Reduce una lista con crite
             nueva_lista.append(i)
 
     return nueva_lista
+def generar_archivo(jugador1, jugador2, modo, turnos, ganador):
+    fecha = datetime.now()
+
+    partida = {
+        "jugador1": jugador1,
+        "jugador2": jugador2,
+        "fecha": str(fecha),
+        "ganador": ganador,
+        "turnos": turnos,
+        "modo": modo
+    }
+
+    if os.path.exists("partida.json"):
+        archivo = open("partida.json", "r")
+        historial = json.load(archivo)
+        archivo.close()
+    else:
+        historial = []
+
+    historial.append(partida)
+
+    archivo = open("partida.json", "w")
+    json.dump(historial, archivo)
+    archivo.close()
