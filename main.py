@@ -1,0 +1,3 @@
+import modos
+
+modos.automatico()

@@ -1,65 +1,26 @@
-import random
-
-def verificar(secreto, intento):  # devuelva cantidad de aciertos
-    secreto = str(secreto)
-    intento = str(intento)
-
-    aciertos = 0
-
-    for i in range(3):
-        if intento[i] in secreto:
-            aciertos += 1
-
-    return aciertos
-
-
-def generacion():  # genera un numero al azar de 3 digitos diferentes (0-9)
-
-    cifra1 = random.randint(0, 9)
-
-    cifra2 = random.randint(0, 9)
-
-    while cifra1 == cifra2:
-        cifra2 = random.randint(0, 9)
-
-    cifra3 = random.randint(0, 9)
-
-    while cifra3 == cifra1 or cifra3 == cifra2:
-        cifra3 = random.randint(0, 9)
-
-    return str(cifra1) + str(cifra2) + str(cifra3)
-
-def nombres(is2player = False):
-    if not is2player:
-        return input("Ingrese el nombre del jugador 1: ")
-    else:
-        jugador1 = input("Ingrese el nombre del jugador 1: ")
-        jugador2 = input("Ingrese el nombre del jugador 2: ")
-        return jugador1, jugador2
-def ganaroperder(x, y):  # retorna True si 2 numeros coinciden, si no False
-
-    str(x)
-    str(y)
-    if x == y:
-        return True
-    else:
-        return False
-
+from herramientas import generacion, fin_de_partida,  interfaz, limpiar, nombres, verificar, ganaroperder, reducir_lista, crear_lista
+from random import randint
 
 def automatico():  # Modo automatico entre 2 jugadores
     secreto1 = generacion()
     secreto2 = generacion()
+    intentosjugador1 = []
+    aciertosjugador1 = []
+    intentosjugador2 = []
+    aciertosjugador2 = []
     isplayer1 = True
-    print("PARTIDA:")
-    print("TURNO JUGADOR JUGADOR 1")
-
+    limpiar()
     print(secreto1, secreto2)
+    jugador1, jugador2 = nombres(True)
+
+    
+
+    interfaz(jugador1, jugador2, intentosjugador1, aciertosjugador1, intentosjugador2, aciertosjugador2, jugador1)
 
     while True:
         #########################################################################################3
         while True:
-            intentopl1 = input("Acierto jugador 1: ")
-
+            intentopl1 = input("Ingrese una consulta: ")
             if len(intentopl1) != 3:
                 print("error")
             elif (
@@ -69,18 +30,19 @@ def automatico():  # Modo automatico entre 2 jugadores
             ):
                 print("error")
             else:
+                intentosjugador1.append(intentopl1)
                 break
         ######################################################################################
         aciertos1 = verificar(secreto2, intentopl1)
-
-        print("Aciertos:", aciertos1)
+        aciertosjugador1.append(aciertos1)
         if aciertos1 == 3:
             if ganaroperder(secreto2, intentopl1):
                 break
+        interfaz(jugador1, jugador2, intentosjugador1, aciertosjugador1, intentosjugador2, aciertosjugador2, jugador2)
+       
 
         while True:
-            intentopl2 = input("Acierto jugador 2: ")
-            ##############################################################################################33
+            intentopl2 = input("Ingrese una consulta: ")
             if len(intentopl2) != 3:
                 print("error")
             elif (
@@ -90,46 +52,20 @@ def automatico():  # Modo automatico entre 2 jugadores
             ):
                 print("error")
             else:
+                intentosjugador2.append(intentopl2)
                 break
         ##################################################################################
         aciertos2 = verificar(secreto1, intentopl2)
-        print("Aciertos:", aciertos2)
+        aciertosjugador2.append(aciertos2)
         if aciertos2 == 3:
             if ganaroperder(secreto1, intentopl2):
                 isplayer1 = False
                 break
+        interfaz(jugador1, jugador2, intentosjugador1, aciertosjugador1, intentosjugador2, aciertosjugador2, jugador1)
     if isplayer1:
-        print(
-            f"El jugador 1 ha ganado la partida! \nEl codigo a adivinar era {secreto2}"
-        )
+        fin_de_partida(jugador1, intentosjugador1)
     else:
-        print(
-            f"El jugador 2 ha ganado la partida! \nEl codigo a adivinar era {secreto1}"
-        )
-
-
-def crear_lista():  # Crea una lista con todos los 720 numero posibles
-    lista = []
-
-    for i in range(1000):
-        numero = f"{i:03}"
-
-        if len(set(numero)) == 3:
-            lista.append(numero)
-
-    return lista
-
-
-def reducir_lista(lista_actual, numero, aciertos):  # Reduce una lista con criterio de aciertos
-    nueva_lista = []
-
-    for i in lista_actual:
-        if verificar(i, numero) == aciertos:
-            nueva_lista.append(i)
-
-    return nueva_lista
-
-
+        fin_de_partida(jugador2, intentosjugador2)
 def manual():  # modo manual entre 2 jugadores
     candidatos1 = crear_lista()  # posibles codigos del jugador 1, vistos desde afuera
     candidatos2 = crear_lista()  # posibles codigos del jugador 2, vistos desde afuera
@@ -210,8 +146,6 @@ def manual():  # modo manual entre 2 jugadores
         print("El jugador 1 ha ganado la partida!")
     else:
         print("El jugador 2 ha ganado la partida!")
-
-
 def computadora():
     listaorigen = crear_lista()
     numerocpu = generacion()
@@ -256,7 +190,7 @@ def computadora():
 
         if not isfirstround:
             while True:
-                i = random.randint(0, len(listacpu)-1)
+                i = randint(0, len(listacpu)-1)
                 guess = listacpu[i]
                 if guess not in cpuintento:
                     cpuintento.append(guess)
@@ -293,5 +227,3 @@ def computadora():
         print("El jugador 1 ha ganado la partida!")
     else:
         print("La Computadora ha ganado la partida!")
-
-manual()
