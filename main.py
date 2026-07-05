@@ -1,3 +1,3 @@
 import modos
 
-modos.automatico()
+modos.manual()

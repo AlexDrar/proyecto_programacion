@@ -3,17 +3,23 @@ import os
 
 def limpiar(): #limpia la terminal
     os.system("cls")
-def fin_de_partida(ganador, consultasganador):
+def fin_de_partida(ganador, consultasganador, incosistente=False):
     limpiar()
     print("="*50)
     titulo = "FIN DE LA PARTIDA"
     print(titulo.center(50))
     print("="*50)
     print()
-    print(f"Ganador: {ganador}")
-    print(f"Turnos utilizados: {len(consultasganador)}")
-    print()
-    input("Presione ENTER para continuar...")
+    if not incosistente:
+        print(f"Ganador: {ganador}")
+        print(f"Turnos utilizados: {len(consultasganador)}")
+        print()
+        input("Presione ENTER para continuar...")
+    else:
+        print("Partida Finalizada! Se ha detectado una inconsistencia")
+        print()
+        input("Presione ENTER para continuar...")
+
 def interfaz(nombre1, nombre2, consultas1, aciertos1, consultas2, aciertos2, turnoactual, iscomputer=False):
     limpiar()
     print("="*50)
@@ -24,7 +30,7 @@ def interfaz(nombre1, nombre2, consultas1, aciertos1, consultas2, aciertos2, tur
     if not iscomputer:
         print(f"Jugador 1 ({nombre1})".ljust(30) + f"Jugador 2 ({nombre2})")
     else:
-        print(f"Jugador 1 ({nombre1})".ljust(30) + "Computadora")
+        print(f"Jugador 1 ({nombre1})".ljust(30))
 
     totalturnos = max(len(consultas1), len(consultas2))
     for i in range(totalturnos):
