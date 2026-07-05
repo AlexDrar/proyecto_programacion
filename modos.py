@@ -1,6 +1,5 @@
 from herramientas import generacion, fin_de_partida,  interfaz, limpiar, nombres, verificar, ganaroperder, reducir_lista, crear_lista
 from random import randint
-
 def automatico():  # Modo automatico entre 2 jugadores
     secreto1 = generacion()
     secreto2 = generacion()
@@ -12,9 +11,6 @@ def automatico():  # Modo automatico entre 2 jugadores
     limpiar()
     print(secreto1, secreto2)
     jugador1, jugador2 = nombres(True)
-
-    
-
     interfaz(jugador1, jugador2, intentosjugador1, aciertosjugador1, intentosjugador2, aciertosjugador2, jugador1)
 
     while True:
@@ -167,7 +163,7 @@ def manual():  # modo manual entre 2 jugadores
 def computadora():
     listaorigen = crear_lista()
     numerocpu = generacion()
-    print(numerocpu)
+    #print(numerocpu)
     cpuintento = []
     listacpu = []
     isfirstround = True
@@ -248,6 +244,8 @@ def computadora():
             if exacto2 == "Y" or exacto2 == "y":
                 isplayer1 = False
                 break
+            else:
+                interfaz(jugador1, "", intentosjugador1, aciertosjugador1, "", "", jugador1, True)
     ##################################################################################
     if inconsistente:
         fin_de_partida(jugador1, aciertos1, True)

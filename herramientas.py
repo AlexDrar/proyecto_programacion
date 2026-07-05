@@ -1,5 +1,7 @@
 import random
 import os
+import json
+from datetime import datetime
 
 def limpiar(): #limpia la terminal
     os.system("cls")
@@ -19,7 +21,6 @@ def fin_de_partida(ganador, consultasganador, incosistente=False):
         print("Partida Finalizada! Se ha detectado una inconsistencia")
         print()
         input("Presione ENTER para continuar...")
-
 def interfaz(nombre1, nombre2, consultas1, aciertos1, consultas2, aciertos2, turnoactual, iscomputer=False):
     limpiar()
     print("="*50)
@@ -47,8 +48,6 @@ def interfaz(nombre1, nombre2, consultas1, aciertos1, consultas2, aciertos2, tur
             print(columna_izq.ljust(30) + columna_der)
         else:
             print(columna_izq)
-
-    print()
     print("-" * 50)
     print(f"Turno actual: {turnoactual}")
 def verificar(secreto, intento):  # devuelva cantidad de aciertos
