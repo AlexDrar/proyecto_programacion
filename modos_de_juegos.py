@@ -1,6 +1,6 @@
 from herramientas import generacion, fin_de_partida,  interfaz, limpiar, nombres, verificar, ganaroperder, reducir_lista, crear_lista, generar_archivo
 from random import randint
-
+import json
 
 def automatico():  # Modo automatico entre 2 jugadores
     secreto1 = generacion()
@@ -215,15 +215,15 @@ def computadora():
 
         if not isfirstround:
             if modo == 1:
-                pool = listacpu  # dificil: elige de la lista ya reducida por TODO el historial
+                lista = listacpu  # dificil: elige de la lista ya reducida por TODO el historial
             elif modo == 2:
-                pool = reducir_lista(listaorigen, guess, aciertoscpu)  # normal: filtra la lista completa solo con la ultima respuesta
+                lista = reducir_lista(listaorigen, guess, aciertoscpu)  # normal: filtra la lista completa solo con la ultima respuesta
             else:
-                pool = listaorigen  # facil: elige de la lista completa, sin usar los aciertos
+                lista = listaorigen  # facil: elige de la lista completa, sin usar los aciertos
 
             while True:
-                i = randint(0, len(pool)-1)
-                guess = pool[i]
+                i = randint(0, len(lista)-1)
+                guess = lista[i]
                 if guess not in cpuintento:
                     cpuintento.append(guess)
                     break
@@ -265,3 +265,20 @@ def computadora():
     else:
         fin_de_partida("Computadora", cpuintento)
         generar_archivo(jugador1, "Computadora", "Computadora", len(cpuintento), "Computadora", dificultad)
+
+def historial():
+    limpiar()
+    with open('partida.json', 'r', encoding='utf-8') as archivo:
+        datos = json.load(archivo)
+    
+    print("="*50)
+    titulo = "HISTORIAL DE PARTIDAS"
+    print(titulo.center(50))
+    print("="*50)
+    for partida in datos:
+        # 2. Ahora sí, como cada 'partida' es un diccionario, usamos .items() aquí adentro
+        for llave, valor in partida.items():
+            print(f"{llave}: {valor}")
+        print("-" * 20) # Una línea
+
+    input("Presione ENTER para continuar...")
