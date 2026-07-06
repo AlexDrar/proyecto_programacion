@@ -16,6 +16,8 @@ while True:
         modos_de_juegos.computadora()
     elif opcion == 3:
         modos_de_juegos.historial()
+    elif opcion == 4:
+        modos_de_juegos.estadisticas()
     else:
         limpiar()
         print("Gracias por jugar!")

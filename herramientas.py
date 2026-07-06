@@ -54,7 +54,7 @@ def menu_principal(): #Muestra el menu principal y devuelve la opcion elegida
     while True:
         limpiar()
         print("="*50)
-        titulo = "CODIGO SECRETO"
+        titulo = "MENU"
         print(titulo.center(50))
         print("="*50)
         print()

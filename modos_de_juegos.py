@@ -11,7 +11,6 @@ def automatico():  # Modo automatico entre 2 jugadores
     aciertosjugador2 = []
     isplayer1 = True
     limpiar()
-    print(secreto1, secreto2)
     jugador1, jugador2 = nombres(True)
 
     
@@ -172,7 +171,6 @@ def manual():  # modo manual entre 2 jugadores
 def computadora():
     listaorigen = crear_lista()
     numerocpu = generacion()
-    print(numerocpu)
     cpuintento = []
     listacpu = []
     isfirstround = True
@@ -265,20 +263,94 @@ def computadora():
     else:
         fin_de_partida("Computadora", cpuintento)
         generar_archivo(jugador1, "Computadora", "Computadora", len(cpuintento), "Computadora", dificultad)
-
 def historial():
     limpiar()
-    with open('partida.json', 'r', encoding='utf-8') as archivo:
-        datos = json.load(archivo)
-    
     print("="*50)
     titulo = "HISTORIAL DE PARTIDAS"
     print(titulo.center(50))
     print("="*50)
+    try:
+        with open('partida.json', 'r', encoding='utf-8') as archivo:
+            datos = json.load(archivo)
+    except FileNotFoundError:
+        print("Juega una partida primero para ver el historial!")
+        return input("Presione ENTER para continuar...")
+    
+    
     for partida in datos:
         # 2. Ahora sí, como cada 'partida' es un diccionario, usamos .items() aquí adentro
         for llave, valor in partida.items():
             print(f"{llave}: {valor}")
         print("-" * 20) # Una línea
 
+    input("Presione ENTER para continuar...")
+
+def estadisticas():
+    limpiar()
+    print("="*50)
+    titulo = "ESTADISTICAS"
+    print(titulo.center(50))
+    print("="*50)
+    try:
+        with open('partida.json', 'r', encoding='utf-8') as archivo:
+            datos = json.load(archivo)
+    except FileNotFoundError:
+        print("Juega una partida primero para ver las estadisticas!")
+        return input("Presione ENTER para continuar...")
+
+
+    turnoslista = []
+
+    total_partidas = len(datos)
+    total_entre_jugadores = 0
+    total_contra_computadora = 0
+    suma_turnos = 0
+    menor_turnos = 0
+    mayor_turnos = 0
+    victorias_computadora = 0
+    victorias_jugadores = {}
+
+    for partida in datos:
+        turnoslista.append(partida["turnos"])
+    turnoslista.sort()
+    
+    menor_turnos = turnoslista[0]
+    mayor_turnos = turnoslista[-1]
+
+
+    for partida in datos:
+        if partida["modo"] == "Computadora":
+            total_contra_computadora += 1
+        else:
+            total_entre_jugadores += 1
+
+        turnos = partida["turnos"]
+        suma_turnos += turnos
+
+        ganador = partida["ganador"]
+        if ganador == "Computadora":
+            victorias_computadora += 1
+        else:
+            if ganador not in victorias_jugadores:
+                victorias_jugadores[ganador] = 0
+            victorias_jugadores[ganador] += 1
+
+    if total_partidas > 0:
+        promedio_turnos = round(suma_turnos / total_partidas, 2)
+    else:
+        promedio_turnos = 0
+
+    print(f"Cantidad total de partidas jugadas: {total_partidas}")
+    print(f"Partidas entre jugadores: {total_entre_jugadores}")
+    print(f"Partidas contra computadora: {total_contra_computadora}")
+    print(f"Promedio de turnos por partida: {promedio_turnos:}")
+    print(f"Partida con menor cantidad de turnos: {menor_turnos}")
+    print(f"Partida con mayor cantidad de turnos: {mayor_turnos}")
+    print(f"Victorias de la computadora: {victorias_computadora}")
+    print()
+    print("Victorias por jugador:")
+    for nombre, cantidad in victorias_jugadores.items():
+        print(f"  {nombre}: {cantidad}")
+
+    print("-" * 50)
     input("Presione ENTER para continuar...")
