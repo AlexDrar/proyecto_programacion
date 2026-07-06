@@ -256,11 +256,12 @@ def computadora():
             else:
                 interfaz(jugador1, "", intentosjugador1, aciertosjugador1, "", "", jugador1, True)
     ##################################################################################
+    dificultad = {1: "Dificil", 2: "Normal", 3: "Facil"}[modo]
     if inconsistente:
         fin_de_partida(jugador1, aciertos1, True)
     elif isplayer1:
         fin_de_partida(jugador1, intentosjugador1)
-        generar_archivo(jugador1, "Computadora", "Computadora", len(intentosjugador1), jugador1)
+        generar_archivo(jugador1, "Computadora", "Computadora", len(intentosjugador1), jugador1, dificultad)
     else:
         fin_de_partida("Computadora", cpuintento)
-        generar_archivo(jugador1, "Computadora", "Computadora", len(cpuintento), "Computadora")
+        generar_archivo(jugador1, "Computadora", "Computadora", len(cpuintento), "Computadora", dificultad)

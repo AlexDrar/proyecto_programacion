@@ -50,6 +50,46 @@ def interfaz(nombre1, nombre2, consultas1, aciertos1, consultas2, aciertos2, tur
             print(columna_izq)
     print("-" * 50)
     print(f"Turno actual: {turnoactual}")
+def menu_principal(): #Muestra el menu principal y devuelve la opcion elegida
+    while True:
+        limpiar()
+        print("="*50)
+        titulo = "CODIGO SECRETO"
+        print(titulo.center(50))
+        print("="*50)
+        print()
+        print("1. Jugar entre personas")
+        print("2. Jugar contra la computadora")
+        print("3. Ver historial de partidas")
+        print("4. Ver estadisticas")
+        print("5. Salir")
+        print()
+        opcion = input("Ingrese el numero de la opcion: ")
+
+        if opcion not in ("1", "2", "3", "4", "5"):
+            print("error")
+            input("Presione ENTER para continuar...")
+        else:
+            return int(opcion)
+def submenu_personas(): #Muestra el submenu de "Jugar entre personas" y devuelve la opcion elegida
+    while True:
+        limpiar()
+        print("="*50)
+        titulo = "CODIGO SECRETO"
+        print(titulo.center(50))
+        print("="*50)
+        print()
+        print("1. Modo Automatico")
+        print("2. Modo Manual")
+        print("3. Volver al menu principal")
+        print()
+        opcion = input("Ingrese el numero de la opcion: ")
+
+        if opcion not in ("1", "2", "3"):
+            print("error")
+            input("Presione ENTER para continuar...")
+        else:
+            return int(opcion)
 def verificar(secreto, intento):  # devuelva cantidad de aciertos
     secreto = str(secreto)
     intento = str(intento)
@@ -109,7 +149,7 @@ def reducir_lista(lista_actual, numero, aciertos):  # Reduce una lista con crite
             nueva_lista.append(i)
 
     return nueva_lista
-def generar_archivo(jugador1, jugador2, modo, turnos, ganador):
+def generar_archivo(jugador1, jugador2, modo, turnos, ganador, dificultad=None):
     fecha = datetime.now()
 
     partida = {
@@ -120,6 +160,9 @@ def generar_archivo(jugador1, jugador2, modo, turnos, ganador):
         "turnos": turnos,
         "modo": modo
     }
+
+    if dificultad is not None:
+        partida["dificultad"] = dificultad
 
     if os.path.exists("partida.json"):
         archivo = open("partida.json", "r")

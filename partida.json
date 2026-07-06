@@ -14,5 +14,14 @@
         "ganador": "Computadora",
         "turnos": 7,
         "modo": "Computadora"
+    },
+    {
+        "jugador1": "alberto",
+        "jugador2": "Computadora",
+        "fecha": "2026-07-05 18:59:40.291696",
+        "ganador": "Computadora",
+        "turnos": 4,
+        "modo": "Computadora",
+        "dificultad": "Dificil"
     }
 ]
