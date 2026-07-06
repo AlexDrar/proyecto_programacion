@@ -5,15 +5,17 @@ while True:
     opcion = menu_principal()
  
     if opcion == 1:
-        suboption = submenu_personas()
-        if suboption == 1:
+        substate = submenu_personas()
+        if substate == 1:
             modos_de_juegos.automatico()
-        elif suboption == 2:
+        elif substate == 2:
             modos_de_juegos.manual()
         else:
             continue 
     elif opcion == 2:
         modos_de_juegos.computadora()
+    elif opcion == 3:
+        modos_de_juegos.historial()
     else:
         limpiar()
         print("Gracias por jugar!")
