@@ -1,3 +1,5 @@
+from curses.ascii import isdigit
+
 from herramientas import generacion, fin_de_partida,  interfaz, limpiar, nombres, verificar, ganaroperder, reducir_lista, crear_lista, generar_archivo
 from random import randint
 import json
@@ -29,6 +31,8 @@ def automatico():  # Modo automatico entre 2 jugadores
                 or intentopl1[1] == intentopl1[2]
             ):
                 print("error")
+            elif not intentopl1.isdigit():
+                print("error")
             else:
                 intentosjugador1.append(intentopl1)
                 break
@@ -50,6 +54,8 @@ def automatico():  # Modo automatico entre 2 jugadores
                 or intentopl2[0] == intentopl2[2]
                 or intentopl2[1] == intentopl2[2]
             ):
+                print("error")
+            elif not intentopl1.isdigit():
                 print("error")
             else:
                 intentosjugador2.append(intentopl2)
@@ -93,6 +99,8 @@ def manual():  # modo manual entre 2 jugadores
                 or intentopl1[0] == intentopl1[2]
                 or intentopl1[1] == intentopl1[2]
             ):
+                print("error")
+            elif not intentopl1.isdigit():
                 print("error")
             else:
                 intentosjugador1.append(intentopl1)
@@ -284,7 +292,6 @@ def historial():
         print("-" * 20) # Una línea
 
     input("Presione ENTER para continuar...")
-
 def estadisticas():
     limpiar()
     print("="*50)
